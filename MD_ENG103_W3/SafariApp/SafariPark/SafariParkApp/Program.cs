@@ -91,18 +91,19 @@ public class Program
         #endregion
 
         #region Polymorphism 
-        //List<Object> gameOBJ = new List<Object>()
-        //{
-        //    new Person("Nish", "Mandal"){Age = 32},
-        //    new Airplane(400,200, "Boeing"),
-        //    new Vehicle(12,20),
-        //    new Hunter("Hunter", "McHunty", "Pentax")
-        //};
+        var cameraa = new Camera("Nikon");
+        List<Object> gameOBJ = new List<Object>()
+        {
+            new Person("Nish", "Mandal"){Age = 32},
+            new Airplane(400,200, "Boeing"),
+            new Vehicle(12,20),
+            new Hunter("Hunter", "McHunty", cameraa)
+        };
 
-        //foreach (var obj in gameOBJ)
-        //{
-        //    Console.WriteLine(obj);
-        //}
+        foreach (var obj in gameOBJ)
+        {
+            Console.WriteLine(obj);
+        }
 
         //Run-time polymorphism (override). Method overloading is a type of complie time polymorphism
         //Person yolanda = new("Yolanda", "Young");
@@ -119,21 +120,49 @@ public class Program
         //var d = a as Hunter;
         //SpartaWrite(d);
 
-        List<iMovalbe> gameOBJ = new List<iMovalbe>()
-        {
-            new Person("Nish", "Mandal"){Age = 32},
-            new Vehicle(12,20),
-            new Hunter("Hunter", "McHunty", "Pentax")
-        };
-        foreach (iMovalbe obj in gameOBJ)
-        {
-            Console.WriteLine(obj.Move());
-            Random rand = new Random();
-            int x = rand.Next(2, 9);
-            Console.WriteLine(obj.Move(x));
-        } 
+        //List<iMovalbe> gameOBJ = new List<iMovalbe>()
+        //{
+        //    new Person("Nish", "Mandal"){Age = 32},
+        //    new Vehicle(12,20),
+        //    new Hunter("Hunter", "McHunty", "Pentax")
+        //};
+        //foreach (iMovalbe obj in gameOBJ)
+        //{
+        //    Console.WriteLine(obj.Move());
+        //    Random rand = new Random();
+        //    int x = rand.Next(2, 9);
+        //    Console.WriteLine(obj.Move(x));
+        //}
 
         #endregion
+
+        //List<iShootable> list = new List<iShootable>
+        //{
+        //    new LaserGun("Zapper"),
+        //    new WaterPistol("SplishySplashy"),
+        //    new Camera("disposable camera")
+        //};
+
+        //foreach (iShootable item in list)
+        //{
+        //    Console.WriteLine(item.Shoot());
+        //}
+
+        var camera = new Camera("Nikon");
+        var waterPistol = new WaterPistol("AquaSplash");
+        var laserGun = new LaserGun("LazzzeR");
+        var lion = new ZooAnimal("lion");
+        //var laserGun = new WaterPistol("LazzzeR");
+        var hunter = new Hunter("Bob", "Kaper", camera);
+        Console.WriteLine(hunter.Shoot());
+        Console.WriteLine(lion.Reaction(camera));
+        hunter.Shooter = waterPistol;
+        Console.WriteLine(hunter.Shoot());
+        Console.WriteLine(lion.Reaction(waterPistol));
+        hunter.Shooter = laserGun;
+        Console.WriteLine(hunter.Shoot());
+        Console.WriteLine(lion.Reaction(laserGun));
+
 
     }
 

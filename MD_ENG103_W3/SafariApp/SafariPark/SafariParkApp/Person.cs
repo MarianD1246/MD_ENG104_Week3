@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SafariParkApp
 {
-    public class Person :iMovalbe
+    public class Person : iMovalbe 
     {
         //Propetries a
 
@@ -56,6 +56,8 @@ namespace SafariParkApp
         {
             FirstName = firstName;
             LastName = lastName;
+            _firstName = firstName;
+            _lastName = lastName;
             Age = age;
         }
 

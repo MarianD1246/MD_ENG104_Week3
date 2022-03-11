@@ -6,28 +6,41 @@ using System.Threading.Tasks;
 
 namespace SafariParkApp
 {
-    public class Hunter : Person
+    public class Hunter : Person, iShootable
     {
-        private string _camera;
+        private readonly object _camera;
 
-        public Hunter(string fName, string lName, String camera = "") : base(fName, lName)
+        //private string _camera;
+
+        public iShootable Shooter { get ; set ;}
+
+        public Hunter(string fName, string lName, iShootable shooter) : base(fName, lName)
         {
-            _camera = camera;
+            Shooter = shooter;
         }
+
+        public Hunter(string fName, string lName) : base(fName, lName)
+        {
+
+        }
+
         public Hunter()
-        {
+        {   
 
         }
 
+        //Change theHunterShoot method so the Hunter calls the Shooter Shoot() method.
+        //(Hunters aren’t born with the power to shoot, they need to use an object that can).
         public string Shoot()
         {
-            return $"{FullName} has taken a photo with {_camera}"; 
+            var shot = Shooter.Shoot();
+            return $"{GetFullName()} has shot with {shot}"; 
         }
 
 
         public override string ToString()
         {
-            return $"{base.ToString()} Camera: {_camera}";
+            return $"{base.ToString()} Shooter: {Shooter}";
         }
 
     }
