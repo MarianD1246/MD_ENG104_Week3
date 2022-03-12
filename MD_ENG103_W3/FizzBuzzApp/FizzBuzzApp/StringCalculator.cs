@@ -14,22 +14,28 @@ namespace FizzBuzzApp
                 return 0;
 
             char delimiter = ',';
-            string newNumbers = numbers.Trim('/');
             string newDelimiter = "";
+            string newNumbers = numbers.Trim('/');
+
             if (!char.IsDigit(newNumbers[0]))
                 delimiter = newNumbers[0];
+
             while (delimiter == '[')
             {
                 int indexStart = newNumbers.IndexOf('[') + 1,
                     indexEnd = newNumbers.IndexOf(']') - indexStart;
+
                 newDelimiter = newNumbers.Substring(indexStart, indexEnd);
                 StringBuilder sb = new();
+
                 sb.Append(newNumbers);
                 sb.Remove(indexEnd + 1, 1); // ]
                 sb.Remove(indexStart - 1, 1); // [
                 sb.Replace(newDelimiter, ",");
                 sb.Remove(indexStart - 1, 1); // ,
+
                 newNumbers = sb.ToString();
+
                 if (!newNumbers.Contains(delimiter)) //[
                     delimiter = ',';
             }
@@ -37,7 +43,7 @@ namespace FizzBuzzApp
             string[] nums = newNumbers.Split('\n', delimiter);
 
             int sum = 0;
-            StringBuilder negatives = new StringBuilder();
+            StringBuilder negatives = new();
             foreach (string num in nums)
             {
                 bool success = int.TryParse(num, out int a);
@@ -66,7 +72,7 @@ namespace FizzBuzzApp
                 throw new ArgumentOutOfRangeException(($"negatives not allowed : {negatives}").Trim());
             }
             return sum;
-            // think about "-3" and "--3"
+            
         }
     }
 }
