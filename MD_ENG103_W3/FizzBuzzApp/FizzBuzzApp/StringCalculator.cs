@@ -24,19 +24,17 @@ namespace FizzBuzzApp
             {
                 int indexStart = newNumbers.IndexOf('[') + 1,
                     indexEnd = newNumbers.IndexOf(']') - indexStart;
-
                 newDelimiter = newNumbers.Substring(indexStart, indexEnd);
-                StringBuilder sb = new();
+                
+                StringBuilder sb = new(newNumbers);
 
-                sb.Append(newNumbers);
-                sb.Remove(indexEnd + 1, 1); // ]
-                sb.Remove(indexStart - 1, 1); // [
                 sb.Replace(newDelimiter, ",");
-                sb.Remove(indexStart - 1, 1); // ,
+                sb.Remove(0, 3); // Removes Bracketed delimiter
+                newNumbers = sb.ToString();
 
                 newNumbers = sb.ToString();
 
-                if (!newNumbers.Contains(delimiter)) //[
+                if (!newNumbers.Contains(delimiter)) //Multiple Delimiter Check
                     delimiter = ',';
             }
 
@@ -46,24 +44,24 @@ namespace FizzBuzzApp
             StringBuilder negatives = new();
             foreach (string num in nums)
             {
-                bool success = int.TryParse(num, out int a);
-                if (success)
+                bool isDigit = int.TryParse(num, out int digit);
+                if (isDigit)
                 {
-                    if(a<0)
+                    if(digit < 0)
                     {
-                        negatives.Append($"{a} ");
+                        negatives.Append($"{digit} ");
                     }
-                    if (a<=1000)
-                        sum += a;
+                    if (digit <= 1000)
+                        sum += digit;
                 }
                 else if (num.Contains("--"))
                 {
                     string newNum = num.Trim('-');
-                    bool doubleSuccess = int.TryParse(newNum, out int doubleNegative);
-                    if (doubleSuccess)
+                    bool success = int.TryParse(newNum, out int negativNum);
+                    if (success)
                     {
-                        if (doubleNegative < 1000)
-                            sum += doubleNegative;
+                        if (negativNum < 1000)
+                            sum += negativNum;
                     }
                 }
             }

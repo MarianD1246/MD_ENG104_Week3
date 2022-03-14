@@ -31,67 +31,79 @@ public class Program
         //}
         //Console.WriteLine("\nexit!" + newNumbers);
 
-        //Dictionary<char, int> romanNumeral = new Dictionary<char, int>() {
-        //        { 'M', 1000 }, { 'D', 500 }, { 'C', 100 },
-        //        { 'L', 50 }, { 'X', 10 }, {'V', 5}, {'I', 1}
-        //};
-        //Dictionary<string, string> romanNumeralCases = new Dictionary<string, string>() {
-        //        {"IIII", "IV"}, {"VIV", "IX"}, {"XXXX", "XL"},
-        //        {"LXL", "XC"}, {"CCCC", "CD"}, {"DCD", "CM"},
-        //};
+        Dictionary<char, int> romanNumeral = new Dictionary<char, int>() {
+                { 'M', 1000 }, { 'D', 500 }, { 'C', 100 },
+                { 'L', 50 }, { 'X', 10 }, {'V', 5}, {'I', 1}
+        };
+        Dictionary<string, string> romanNumeralCases = new Dictionary<string, string>() {
+                {"IIII", "IV"}, {"VIV", "IX"}, {"XXXX", "XL"},
+                {"LXL", "XC"}, {"CCCC", "CD"}, {"DCD", "CM"},
+        };
 
-        //int num = 0;
-        //bool success = true;
-        //while (success)
+        string def = "";
+        bool isOnce = true;
+        int num = 0;
+        bool success = true;
+        while (success)
+        {
+            Console.WriteLine("Enter a number:");
+            string rl = Console.ReadLine();
+            success = int.TryParse(rl, out num);
+            if (success)
+            {
+                StringBuilder romanSumLoose = new();
+                foreach (KeyValuePair<char, int> rn in romanNumeral)
+                {
+                    int rnInNum = num / rn.Value;
+                    if (rnInNum >= 0)
+                    {
+                        romanSumLoose.Append(new string(rn.Key, rnInNum));
+                        num -= rn.Value * rnInNum;
+                    }
+                }
+                string romanSum = romanSumLoose.ToString();
+                def = romanSum;
+
+                foreach (var rnc in romanNumeralCases)
+                {
+                    romanSum = RomanNumeralCorrection(rnc.Key, rnc.Value, romanSumLoose, romanSum);
+                }
+                if (!isOnce)
+                {
+                    Console.WriteLine(def);
+                    Console.WriteLine(romanSumLoose.ToString());
+                }
+                else if (isOnce)
+                {
+                    Console.WriteLine($"{def}  <= Loose");
+                    Console.WriteLine($"{romanSumLoose.ToString()}  <= Compresed");
+                    isOnce = !isOnce;
+                }
+                romanSumLoose.Clear();
+                romanSum = "";
+            }
+        }
+
+        //double sum = 99.99;
+        //sum = Math.Round(sum, 2) * 100;
+        //long lSum = (long)sum;
+        //int[] bills = new int[]{ 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1 };
+
+
+        //StringBuilder billsInSum = new();
+        //foreach (int bill in bills)
         //{
-        //    Console.WriteLine("Enter a numer:");
-        //    string rl = Console.ReadLine();
-        //    success = int.TryParse(rl, out num);
-        //    if (success)
+        //    int valueInSum = (int)(lSum / bill);
+        //    if (valueInSum > 0)
         //    {
-        //        StringBuilder romanSumLoose = new();
-        //        foreach (KeyValuePair<char, int> rn in romanNumeral)
-        //        {
-        //            int rnInNum = num / rn.Value;
-        //            if (rnInNum >= 0)
-        //            {
-        //                romanSumLoose.Append(new string(rn.Key, rnInNum));
-        //                num -= rn.Value * rnInNum;
-        //            }
-        //        }
-        //        string romanSum = romanSumLoose.ToString();
-
-        //        foreach (var rnc in romanNumeralCases)
-        //        {
-        //            romanSum = RomanNumeralCorrection(rnc.Key, rnc.Value, romanSumLoose, romanSum);
-        //        }
-        //        Console.WriteLine(romanSumLoose.ToString());
-        //        Console.WriteLine(romanSum);
-        //        romanSumLoose.Clear();
-        //        romanSum = "";
+        //        lSum -= bill * valueInSum;
+        //        billsInSum.Append($"- {valueInSum} `£{(decimal)bill / 100}`\n");
+        //        if (lSum == 0)
+        //            break;
         //    }
         //}
 
-        double sum = 99.99;
-        sum = Math.Round(sum, 2) * 100;
-        long lSum = (long)sum;
-        int[] bills = new int[]{ 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1 };
-
-
-        StringBuilder billsInSum = new();
-        foreach (int bill in bills)
-        {
-            int valueInSum = (int)(lSum / bill);
-            if (valueInSum > 0)
-            {
-                lSum -= bill * valueInSum;
-                billsInSum.Append($"- {valueInSum} `£{(decimal)bill / 100}`\n");
-                if (lSum == 0)
-                    break;
-            }
-        }
-    
-        Console.WriteLine(billsInSum.ToString().Trim('\n'));
+        //Console.WriteLine(billsInSum.ToString().Trim('\n'));
 
     }
 
